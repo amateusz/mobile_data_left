@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, get_flashed_messages
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -6,7 +6,7 @@ app.secret_key = 'some_secret'
 
 @app.route('/', methods=['GET'])
 def entry():
-    return render_template('dynamic.html')
+    return render_template('welcome.html')
 
 
 @app.route('/', methods=['POST'])
@@ -18,7 +18,10 @@ def entry_form():
         return entry()
     else:
         # return alert/error, that fields cannot be left empty.
-        flash('You were successfully logged in', 'error')
+        if not request.form['username']:
+            flash('Wypełnij pole „numer telefonu”')
+        if not request.form['password']:
+            flash('Wypełnij pole „hasło”')
         return redirect(url_for('entry'))
 
 

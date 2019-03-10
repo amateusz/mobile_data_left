@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% block head %}
+    <html>
+    <head>
+        <meta charset="utf8">
+        <title>Ile GB ?</title>
+        <meta name="viewport" content="width=device-width,
+		initial-scale=1.0, user-scalable=yes">
+        <meta content="#020e1b" name="theme-color">
+        <meta name="robots" content="noindex">
+        <meta name="referrer" content="none">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
+        <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+        <style>
+            .comic-font {
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
+
+            h1, h4 {
+                font-family: 'Overpass', sans-serif;
+            }
+        </style>
+    </head>
+{% endblock %}
+
+<body>
+{% block header %}
+    <body class="w3-teal">
+    <div class="w3-top w3-mobile" style="margin: 0px">
+        <header class="w3-container w3-card w3-cyan ">
+            <strong>
+                <h1 class="w3-center" style="font-size:10vw">Sprawdź interneta</h1>
+            </strong>
+        </header>
+    </div>
+{% endblock %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div id="error_modal" class="w3-modal">
+            <div class="w3-modal-content">
+                <header class="w3-container w3-red">
+                    <span onclick="document.getElementById('error_modal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                    {% if messages|length <= 1 %}
+                        <h2>Błąd:</h2>
+                    {% else %}
+                        <h2>Błędy:</h2>
+                    {% endif %}
+                </header>
+
+                <div class="w3-container w3-gray">
+                    <ul class=flashes>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                {#                <footer class="w3-container w3-gray">#}
+                {#                    <p>Modal Footer</p>#}
+                {#                </footer>#}
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            document.getElementById('error_modal').style.display = 'block';
+        </script>
+    {% endif %}
+{% endwith %}
+
+{% block center %}{% endblock %}
+</body>
+</html>
