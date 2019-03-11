@@ -15,7 +15,8 @@ def entry_form():
         # perform actual check
         # maybe some loading screen
         print("checking")
-        return entry()
+        # add new service to the services
+        return redirect(url_for('services_list'))
     else:
         # return alert/error, that fields cannot be left empty.
         if not request.form['username']:
@@ -28,11 +29,10 @@ def entry_form():
 @app.route('/services')
 def services_list():
     from random import randint
-    accounts = [{'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0)/10,
+    accounts = [{'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
                  'dateDue': randint(0, 365)} for _ in range(randint(1, 4))]
     accounts = sorted(accounts, key=lambda x: x['dateDue'])
     return (render_template('services_list.html', accounts=accounts))
 
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=False)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=8000, debug=False)
