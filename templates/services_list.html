@@ -31,16 +31,18 @@
             </table>
 
             <div class="w3-row">
+                {# hidden modal pop-up #}
                 <div id="add_new_modal" class="w3-modal">
-                    <div class="w3-modal-content" style="max-width: 550px;">
+                    {#                    override margins of mobile layout#}
+                    <div class="w3-modal-content w3-display-middle w3-mobile"
+                         style="max-width: 550px; max-width: 96%; margin: 0px 10px 0px 0px">
                         <header class="w3-container w3-black">
 
-                    <span onclick="document.getElementById('add_new_modal').style.display='none';"
-                          class="w3-button w3-display-topright">&times;</span>
+                        <span onclick="document.getElementById('add_new_modal').style.display='none';"
+                              class="w3-button w3-display-topright">&times;</span>
                             <h2>Dodaj kolejne konto</h2>
                         </header>
-                        {#                        <div class="w3-container w3-gray">#}
-                        <div class="w3-auto w3-teal" style="padding-top: 20px; padding-bottom: 20px;"
+                        <div class="w3-auto w3-teal" style="padding-bottom: 20px"
                              id="main">
                             {% include "add_new_form.html" %}
                         </div>
@@ -55,10 +57,6 @@
                            type="button"
                            value="Dodaj kolejne konto">
                 </form>
-                <script>
-                    document.getElementById('add_new_modal').style.display = 'block'
-
-                </script>
                 <div class="w3-rest  w3-hide-small">
                 </div>
             </div>
