@@ -9,8 +9,9 @@ def entry():
     return render_template('welcome.html')
 
 
-@app.route('/', methods=['POST'])
-def entry_form():
+@app.route('/services', methods=['POST'])
+def services_add():
+    print(request.path, request.host_url)
     if request.form['username'] and request.form['password']:
         # perform actual check
         # maybe some loading screen
@@ -23,7 +24,7 @@ def entry_form():
             flash('Wypełnij pole „numer telefonu”')
         if not request.form['password']:
             flash('Wypełnij pole „hasło”')
-        return redirect(url_for('entry'))
+        return redirect(request.path)
 
 
 @app.route('/services')
