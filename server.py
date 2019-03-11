@@ -27,10 +27,10 @@ def entry_form():
 
 @server.route('/services')
 def services_list():
-    accounts = [{'msdin': 123123123, 'operator': 'Dombo SA', 'GBdue': 12.5, 'dateDue': 13},
-                {'msdin': 123123123, 'operator': 'Dombo SA', 'GBdue': 12.5, 'dateDue': 13},
-                {'msdin': 123123123, 'operator': 'Dombo SA', 'GBdue': 12.5, 'dateDue': 13},
-                {'msdin': 123123123, 'operator': 'Dombo SA', 'GBdue': 12.5, 'dateDue': 13}]
+    from random import randint
+    accounts = [{'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0)/10,
+                 'dateDue': randint(0, 365)} for _ in range(randint(1, 4))]
+    accounts = sorted(accounts, key=lambda x: x['dateDue'])
     return (render_template('services_list.html', accounts=accounts))
 
 
