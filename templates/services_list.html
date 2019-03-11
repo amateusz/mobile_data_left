@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block center %}
+    <div class="w3-content w3-red" style="max-width:1100px; margin-top: 26vh" style="" id="main">
+
+        <div class="w3-white">
+            <div class="w3-container w3-black">
+                <h2>Twoje konta:</h2>
+            </div>
+            <div>
+                {#                {% with accounts %}#}
+                <table class="w3-table-all">
+                    <tr>
+                        <th>Numer</th>
+                        <th>Operator</th>
+                        <th>Gigabajty</th>
+                        <th>Dni</th>
+                    </tr>
+                    {% for account in accounts %}
+                        <tr>
+                            <td>{{ account['msdin'] }}</td>
+                            <td>{{ account['operator'] }}</td>
+                            <td>{{ account['GBdue'] }}</td>
+                            <td>{{ account['dateDue'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="button" id="add_new" value="Add new">
+            </div>
+        </div>
+    </div>
+{% endblock %}
