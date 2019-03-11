@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, get_flashed_messages
 
-server = Flask(__name__)
-server.secret_key = 'some_secret'
+app = Flask(__name__)
+app.secret_key = 'some_secret'
 
 
-@server.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def entry():
     return render_template('welcome.html')
 
 
-@server.route('/', methods=['POST'])
+@app.route('/', methods=['POST'])
 def entry_form():
     if request.form['username'] and request.form['password']:
         # perform actual check
@@ -25,7 +25,7 @@ def entry_form():
         return redirect(url_for('entry'))
 
 
-@server.route('/services')
+@app.route('/services')
 def services_list():
     from random import randint
     accounts = [{'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0)/10,
@@ -35,4 +35,4 @@ def services_list():
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8000, debug=False)
+    app.run(host='0.0.0.0', port=8000, debug=False)
