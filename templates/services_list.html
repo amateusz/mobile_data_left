@@ -1,49 +1,65 @@
 {% extends "layout.html" %}
 {% block center %}
-    <div class="w3-content w3-rest" style="max-width: 900px; padding-top: calc(15vw + 30px)" id="main">
+    <div class="w3-content w3-rest" style="max-width: 800px; padding-top: calc(15vw + 30px)" id="main">
 
-        <div class="w3-container">
-            <div class="w3-container w3-purple">
-                {% if accounts|length <= 1 %}
-                    <h3>Twoje konto:</h3>
-                {% else %}
-                    <h3>Twoje konta:</h3>
-                {% endif %}
+    <div class="w3-container">
+        <div class="w3-container w3-purple">
+            {% if accounts|length <= 1 %}
+                <h3>Twoje konto:</h3>
+            {% else %}
+                <h3>Twoje konta:</h3>
+            {% endif %}
 
-            </div>
-            <div>
-                {#                {% with accounts %}#}
-                <table class="w3-table w3-striped w3-bordered w3-white">
-                    <tr class="w3-dark-grey">
-                        <th>Numer</th>
-                        <th>Operator</th>
-                        <th>Gigabajty</th>
-                        <th>Dni</th>
+        </div>
+        <div>
+            {#                {% with accounts %}#}
+            <table class="w3-table w3-striped w3-bordered w3-white">
+                <tr class="w3-dark-grey">
+                    <th>Numer</th>
+                    <th>Operator</th>
+                    <th>Gigabajty</th>
+                    <th>Dni</th>
+                </tr>
+                {% for account in accounts %}
+                    <tr>
+                        <td>{{ account['msdin'] }}</td>
+                        <td>{{ account['operator'] }}</td>
+                        <td>{{ account['GBdue'] }}</td>
+                        <td>{{ account['dateDue'] }}</td>
                     </tr>
-                    {% for account in accounts %}
-                        <tr>
-                            <td>{{ account['msdin'] }}</td>
-                            <td>{{ account['operator'] }}</td>
-                            <td>{{ account['GBdue'] }}</td>
-                            <td>{{ account['dateDue'] }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                {% endfor %}
+            </table>
 
-                <div class="w3-row">
-                    {#                    <div class="w3-col w3-block w3-red">#}
-                    <input class="w3-col  w3-button w3-ripple	 w3-light-blue w3-hover-purple w3-mobile"
-                           style="width: 35%; height: 60px; margin-top: 8px"
-                           type="button"
-                           id="add_new"
-                           value="Dodaj kolejne konto">
-                    {#                    </div>#}
-                    <div class="w3-rest  w3-hide-small">
+            <div class="w3-row">
+                <div id="add_new_modal" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <header class="w3-container w3-black">
+                    <span onclick="document.getElementById('add_new_modal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                            {% include "add_new_form.html" %}
+                        </header>
 
+                        <div class="w3-container w3-gray">
 
+                        </div>
                     </div>
                 </div>
 
+                <form onclick="document.getElementById('add_new_modal').style.display = 'block';">
+                    <input class="w3-col  w3-button w3-ripple	 w3-light-blue w3-hover-purple w3-mobile"
+                           style="width: 35%; height: 60px; margin-top: 8px"
+                           id="add_new"
+                           type="button"
+                           value="Dodaj kolejne konto">
+                </form>
+
+                <div class="w3-rest  w3-hide-small">
+                </div>
             </div>
+
         </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

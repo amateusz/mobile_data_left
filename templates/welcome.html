@@ -1,32 +1,4 @@
 {% extends "layout.html" %}
-{% block center %}
-    <div class="w3-auto w3-teal" id="main">
-        <form class="w3-container" style="padding-top: calc(17vw + 20px); padding-bottom: 30vh;" id="landing_form"
-              method="post">
-            <label>numer telefonu:</label>
-            <input class="w3-input w3-margin-bottom" type="text" name="username">
-            <label>hasło:</label>
-            <input class="w3-input w3-margin-bottom" type="password" name="password">
-            <input class="w3-button w3-ripple w3-light-gray w3-hover-purple w3-margin-top w3-mobile"
-                   style="width: 35%" type="submit" value="Sprawdź">
-        </form>
-    </div>
-    <div class="w3-display-bottomleft w3-mobile">
-        <div class="w3-row">
-            <div class="w3-col w3-container w3-hide-small" style="width:100px"></div>
-            <div class="w3-rest">
-                <footer class="w3-container w3-rest  w3-card w3-right-align  w3-purple comic-font">
+{% include "add_new_form.html" %}
 
-                    <h4 style="font-size: calc(1vw + 8px)"><strong>Łatwe sprawdzanie pozostałych gigabajtów u operatora
-                        komórkowego.</strong>
-                        <br>Rozwiązanie skierowane do właścicieli laptopów z modemem komórkowym.</h4>
-                    <text style="font-size:9px">W3 CSS + flask + python backend. Licencja raczej otwarta. Wszystkie
-                        moduły
-                        operatorów dostępne na githubie. Mati Grzywacz.
-                    </text>
-                </footer>
-            </div>
-        </div>
-    </div>
-{% endblock %}
 
