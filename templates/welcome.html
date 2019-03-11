@@ -1,4 +1,6 @@
 {% extends "layout.html" %}
-{% include "add_new_form.html" %}
-
-
+{% block center %}
+    <div class="w3-auto w3-teal" style="padding-top: calc(17vw + 20px); padding-bottom: 30vh;" id="main">
+        {% include "add_new_form.html" %}
+    </div>
+{% endblock %}
