@@ -31,13 +31,17 @@
 <body>
 {% block header %}
     <body class="w3-teal">
+
     <div class="w3-display-topright w3-mobile" style="margin: 0px; width: 84vw">
-        <header class="w3-container w3-card w3-center w3-cyan">
+        {#        <a href="/">#}
+        <header class="w3-container w3-card w3-center w3-cyan"
+                onclick="window.location = '/'">
             <strong>
                 <h1 class="w3-center" style="font-size: calc(5vw + 16px); text-align
 : center; margin-left: -16vw">Sprawdź interneta</h1>
             </strong>
         </header>
+        {#        </a>#}
     </div>
 {% endblock %}
 
