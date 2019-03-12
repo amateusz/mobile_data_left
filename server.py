@@ -25,11 +25,7 @@ def services_add():
         # add new service to the services
         return redirect(url_for('services_list'))
     else:
-        # return alert/error, that fields cannot be left empty.
-        if not request.form['username']:
-            flash('Wypełnij pole „numer telefonu”')
-        if not request.form['password']:
-            flash('Wypełnij pole „hasło”')
+        # this should never happen, as we validate client side. BUT STILL
         return redirect(request.path)
 
 
