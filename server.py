@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, get_flashed_messages
+import business_logic
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -16,6 +17,11 @@ def services_add():
         # perform actual check
         # maybe some loading screen
         print("checking")
+        try:
+            new_service = business_logic.Service.guess_service(*request.form)
+        except LookupError:
+            flash('Podane dane logowania są błędne. Żaden operator się do nich nie przyznaje', 'error')
+
         # add new service to the services
         return redirect(url_for('services_list'))
     else:

@@ -1,14 +1,35 @@
 {% block center %}
+
+
     <script>
         function validateForm() {
             var u = document.forms["landing_form"]["username"].value;
             var p = document.forms["landing_form"]["password"].value;
             if (u == null || u === "" | p == null || p === "") {
-                alert("Wypełnij oba pola")
+                document.getElementById('form_error').style.display = 'block';
                 return false;
             }
         }
     </script>
+
+    <div id="form_error" class="w3-modal">
+        <div class="w3-modal-content">
+            <header class="w3-container w3-red">
+                    <span onclick="document.getElementById('form_error').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                <h2>Błąd:</h2>
+            </header>
+
+            <div class="w3-container w3-gray">
+                Wypełnij oba pola
+            </div>
+
+            {#                <footer class="w3-container w3-gray">#}
+            {#                    <p>Modal Footer</p>#}
+            {#                </footer>#}
+
+        </div>
+    </div>
 
     <form class="w3-container" id="landing_form" onsubmit="return validateForm()" action="/services"
             {#        <form class="w3-container" style="padding-top: calc(17vw + 20px)" ; id="landing_form"#}
