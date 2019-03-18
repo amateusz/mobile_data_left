@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, get_flashed_messages
+from flask import Flask, render_template, request, flash, redirect, url_for
+
 import business_logic
 
 app = Flask(__name__)
@@ -12,13 +13,12 @@ def entry():
 
 @app.route('/services', methods=['POST'])
 def services_add():
-    print(request.path, request.host_url)
     if request.form['username'] and request.form['password']:
         # perform actual check
         # maybe some loading screen
         print("checking")
         try:
-            new_service = business_logic.Service.guess_service(*request.form)
+            new_service = business_logic.Service.guess_service(*list(request.form.values()))
         except LookupError:
             flash('Podane dane logowania są błędne. Żaden operator się do nich nie przyznaje', 'error')
 

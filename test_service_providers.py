@@ -29,7 +29,7 @@ class TestServiceProviders(unittest.TestCase):
                 with self.assertRaises(PermissionError):
                     object.giveMeToken('wrong', 'login')
 
-    def test_3_get_new_token(self):
+    def test_3_get_GBs(self):
         for provider in __class__.providers_under_test:
             with self.subTest(provider=provider):
                 module = __import__(provider)
@@ -40,8 +40,12 @@ class TestServiceProviders(unittest.TestCase):
                 elif provider == 'plus_online_client':
                     object = module.PlusOnlineClient()
                     username, password = input('plus: '), getpass()
-                self.assertIsNotNone(object.giveMeToken(username, password))
+                token = object.giveMeToken(username, password)
+                self.assertIsNotNone(token)
 
+                object.authenticate(token)
+                object.refreshDetails(token)
+                self.assertGreater(float(object.getGBamount()), 0)
 
 
 if __name__ == '__main__':
