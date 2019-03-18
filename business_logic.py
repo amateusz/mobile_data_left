@@ -63,8 +63,9 @@ class Account:
         new_subAccount.set(AccountSub.DATE, self.client.getDueToDays())
         new_subAccount.set(AccountSub.NUMBER, self.client.number)
         try:
-            new_subAccount.set(AccountSub.OPERATOR, {'text': self.client.friendly_name, 'color': self.client.friendly_color})
-        except KeyError:
+            new_subAccount.set(AccountSub.OPERATOR,
+                               {'text': self.client.friendly_name, 'color': self.client.friendly_color})
+        except AttributeError:
             new_subAccount.set(AccountSub.OPERATOR, {'text': self.client.friendly_name})
         self.subAccounts.append(new_subAccount)
 
