@@ -38,13 +38,9 @@ class Service:
         self.country = 'pl'
         self.serviceDetails = ServiceDetails()
         # actual init
-        print(type(username))
-        print(type(password))
         self.token = self.client.giveMeToken(username, password)
-        # self.token = 'ffdsfdsamewlkrnlkn435'
-        print(self.token)
 
-    def fetch(self):
+    def fetch_mock(self):
         from random import randint
         number = randint(500_000_000, 899_999_999)
         GB = randint(0, 100_0) / 10
@@ -53,6 +49,14 @@ class Service:
         self.serviceDetails.set(ServiceDetails.GB, GB)
         self.serviceDetails.set(ServiceDetails.DATE, date)
         self.serviceDetails.set(ServiceDetails.NUMBER, number)
+
+    def fetch(self):
+        self.client.authenticate(self.token)
+        self.client.refreshDetails(self.token)
+
+        self.serviceDetails.set(ServiceDetails.GB, self.client.getGBamount())
+        self.serviceDetails.set(ServiceDetails.DATE, self.client.getDueToDays())
+        self.serviceDetails.set(ServiceDetails.NUMBER, self.client.number)
 
     def details(self):
         return self.serviceDetails.dict()
@@ -64,7 +68,7 @@ class Service:
                 guessed = Service(username, password, operator)
                 guessed.fetch()
             except PermissionError as e:
-                print (e)
+                pass  # handled at higher level
             except Exception as e:
                 raise (e)
             else:
