@@ -43,6 +43,7 @@ class Account:
         # self.username = username
         # self.password = password
         self.client = operator_client()
+        self.client.friendly_color = 'orange'
         self.country = 'pl'
         self.subAccounts = []
         # actual init
@@ -62,7 +63,7 @@ class Account:
         new_subAccount.set(AccountSub.GB, self.client.getGBamount())
         new_subAccount.set(AccountSub.DATE, self.client.getDueToDays())
         new_subAccount.set(AccountSub.NUMBER, self.client.number)
-        new_subAccount.set(AccountSub.OPERATOR, self.client.friendly_name)
+        new_subAccount.set(AccountSub.OPERATOR, {'text': self.client.friendly_name, 'color': self.client.friendly_color})
         self.subAccounts.append(new_subAccount)
 
     def details(self):
