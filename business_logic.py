@@ -1,17 +1,22 @@
 from my_orange_client import MyOrangeClient
 from plus_online_client import PlusOnlineClient
 
-class AccountSub:
+
+class AccountSub(dict):
     # data type.
-    DATE, GB, NUMBER, ALIAS, OPERATOR = 1, 2, 3, 4, 5  # static ??
+    DATE = 'dateDue'
+    GB = 'GBdue'
+    NUMBER = 'msdin'
+    ALIAS = 'alias'
+    OPERATOR = 'operator '  # statics
 
     def __init__(self):
-        self.NUMBER = None
-        self.GB = None
-        self.DATE = None
-        self.ALIAS = None
+        self[__class__.NUMBER] = None
+        self[__class__.GB] = None
+        self[__class__.DATE] = None
+        self[__class__.ALIAS] = None
 
-    def dict(self):
+    def __dict__(self):
         if self.GB and self.DATE:
             return dict([__class__.DATE, self.DATE],
                         [__class__.GB, self.GB],
@@ -24,7 +29,7 @@ class AccountSub:
             raise LookupError
 
     def set(self, key, value):
-        self.key = value
+        self[key] = value
 
 
 class Account:

@@ -25,13 +25,18 @@ def services_add():
             flash('Podane dane logowania są błędne. Żaden operator się do nich nie przyznaje', 'error')
         else:
             # add new service to the services
-            sessions_accounts = []
-            if 'accounts' in session:
-                sessions_accounts = session.pop('accounts')
-            sessions_accounts.append(business_logic.Account.serialize(new_account))
-            session['accounts'] = sessions_accounts
+            try:
+                new_account.fetch()
+            except Exception as e:
+                raise (e)  # idk
+            else:
+                sessions_accounts = []
+                if 'accounts' in session:
+                    sessions_accounts = session.pop('accounts')
+                sessions_accounts.append(business_logic.Account.serialize(new_account))
+                session['accounts'] = sessions_accounts
 
-            session.permanent = True
+                session.permanent = True
 
         return redirect(url_for('services_list'))
     else:
@@ -53,9 +58,9 @@ def services_list():
             account = business_logic.Account.deserialize(account_str)
             for subAccount in account.subAccounts:
                 try:
-                    accounts_template.append(subAccount.dict())
+                    accounts_template.append(subAccount)
                 except LookupError as e:
-                    raise (e) # our entry might got outdated, corrupted or emptied
+                    raise (e)  # our entry might got outdated, corrupted or emptied
 
     else:
         from random import randint
