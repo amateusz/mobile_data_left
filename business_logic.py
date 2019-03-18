@@ -1,7 +1,6 @@
 from my_orange_client import MyOrangeClient
 from plus_online_client import PlusOnlineClient
 
-
 class AccountSub:
     # data type.
     DATE, GB, NUMBER, ALIAS, OPERATOR = 1, 2, 3, 4, 5  # static ??
@@ -79,6 +78,7 @@ class Account:
 
     @staticmethod
     def serialize(obj):
+        # https://stackoverflow.com/questions/18478287/making-object-json-serializable-with-regular-encoder/18561055
         from pickle import dumps
         return dumps(obj).decode('latin1')
 

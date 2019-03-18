@@ -45,14 +45,27 @@ def services_list():
     @TODO: take something as an input. either JWT or session cookie... or both. / Currently session cookie
     :return:
     '''
+
+    accounts_template = []
+
     if 'accounts' in session:
-        for account in session['accounts']:
-            print(business_logic.Account.deserialize(account))
-    from random import randint
-    accounts = [{'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
-                 'dateDue': randint(0, 365)} for _ in range(randint(1, 4))]
-    accounts = sorted(accounts, key=lambda x: x['dateDue'])
-    return (render_template('services_list.html', accounts=accounts))
+        for account_str in session['accounts']:
+            account = business_logic.Account.deserialize(account_str)
+            for subAccount in account.subAccounts:
+                try:
+                    accounts_template.append(subAccount.dict())
+                except LookupError as e:
+                    raise (e) # our entry might got outdated, corrupted or emptied
+
+    else:
+        from random import randint
+        for _ in range(randint(1, 4)):
+            accounts_template.append(
+                {'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
+                 'dateDue': randint(0, 365)})
+
+    accounts_template = sorted(accounts_template, key=lambda x: x['dateDue'])
+    return (render_template('services_list.html', accounts=accounts_template))
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=8000, debug=False)
