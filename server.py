@@ -18,7 +18,7 @@ def services_add():
         # maybe some loading screen
         print("checking")
         try:
-            new_service = business_logic.Service.guess_service(*list(request.form.values()))
+            new_service = business_logic.Service.guess_service(*request.form.values())
         except LookupError:
             flash('Podane dane logowania są błędne. Żaden operator się do nich nie przyznaje', 'error')
 

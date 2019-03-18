@@ -34,13 +34,13 @@ class Service:
         # declare properties
         # self.username = username
         # self.password = password
-        self.operator_client = operator_client
+        self.client = operator_client()
         self.country = 'pl'
         self.serviceDetails = ServiceDetails()
         # actual init
         print(type(username))
         print(type(password))
-        self.token = self.operator_client.giveMeToken(username, password)
+        self.token = self.client.giveMeToken(username, password)
         # self.token = 'ffdsfdsamewlkrnlkn435'
         print(self.token)
 
@@ -58,11 +58,13 @@ class Service:
         return self.serviceDetails.dict()
 
     @staticmethod
-    def guess_service(username, password):
+    def guess_service(username, password, *args):
         for operator in __class__.operators:
             try:
                 guessed = Service(username, password, operator)
                 guessed.fetch()
+            except PermissionError as e:
+                print (e)
             except Exception as e:
                 raise (e)
             else:
