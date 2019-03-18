@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 
 import business_logic
 
 app = Flask(__name__)
-app.secret_key = 'some_secret'
+app.secret_key = 'some_secret'  # development only
 
+
+# @TODO what should client store ? All the data necessary to recreate the services_list. That is: a lits of credentials per operator. What should be passed within session then? I guess the same. Every refresh should fetch the data from the operator
 
 @app.route('/', methods=['GET'])
 def entry():
@@ -18,11 +20,19 @@ def services_add():
         # maybe some loading screen
         print("checking")
         try:
-            new_service = business_logic.Service.guess_service(*request.form.values())
+            new_account = business_logic.Account.guess_operator(*request.form.values())
         except LookupError:
             flash('Podane dane logowania są błędne. Żaden operator się do nich nie przyznaje', 'error')
+        else:
+            # add new service to the services
+            sessions_accounts = []
+            if 'accounts' in session:
+                sessions_accounts = session.pop('accounts')
+            sessions_accounts.append(business_logic.Account.serialize(new_account))
+            session['accounts'] = sessions_accounts
 
-        # add new service to the services
+            session.permanent = True
+
         return redirect(url_for('services_list'))
     else:
         # this should never happen, as we validate client side. BUT STILL
@@ -31,6 +41,13 @@ def services_add():
 
 @app.route('/services')
 def services_list():
+    '''
+    @TODO: take something as an input. either JWT or session cookie... or both. / Currently session cookie
+    :return:
+    '''
+    if 'accounts' in session:
+        for account in session['accounts']:
+            print(business_logic.Account.deserialize(account))
     from random import randint
     accounts = [{'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
                  'dateDue': randint(0, 365)} for _ in range(randint(1, 4))]
