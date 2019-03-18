@@ -73,7 +73,6 @@ class Account:
         for operator in __class__.operators:
             try:
                 guessed = Account(username, password, operator)
-                guessed.fetch()
             except PermissionError as e:
                 pass  # handled at higher level
             except Exception as e:

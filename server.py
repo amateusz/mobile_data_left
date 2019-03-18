@@ -56,19 +56,20 @@ def services_list():
     if 'accounts' in session:
         for account_str in session['accounts']:
             account = business_logic.Account.deserialize(account_str)
+            print(account.client.friendly_name)
             for subAccount in account.subAccounts:
                 try:
                     accounts_template.append(subAccount)
                 except LookupError as e:
                     raise (e)  # our entry might got outdated, corrupted or emptied
 
-    else:
-        from random import randint
-        for _ in range(randint(1, 4)):
-            accounts_template.append(
-                {'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
-                 'dateDue': randint(0, 365)})
-
+    # else:
+    #     from random import randint
+    #     for _ in range(randint(1, 4)):
+    #         accounts_template.append(
+    #             {'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
+    #              'dateDue': randint(0, 365)})
+    
     accounts_template = sorted(accounts_template, key=lambda x: x['dateDue'])
     return (render_template('services_list.html', accounts=accounts_template))
 
