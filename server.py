@@ -69,7 +69,7 @@ def services_list():
     #         accounts_template.append(
     #             {'msdin': randint(500_000_000, 899_999_999), 'operator': 'Dombo SA', 'GBdue': randint(0, 100_0) / 10,
     #              'dateDue': randint(0, 365)})
-    
+
     accounts_template = sorted(accounts_template, key=lambda x: x['dateDue'])
     return (render_template('services_list.html', accounts=accounts_template))
 

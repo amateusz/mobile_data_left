@@ -30,7 +30,12 @@
                     {% for account in accounts %}
                         <tr>
                             <td>{{ account['msdin'] }}</td>
-                            <td style="background-color: {{ account['operator'].color }}">{{ account['operator'].text }}</td>
+                            {% if account['operator'].color %}
+                                <td style="background-color: {{ account['operator'].color }}">
+                                    {% else %}
+                                <td>
+                            {% endif %}
+                            {{ account['operator'].text }}</td>
                             <td>{{ account['GBdue'] }}</td>
                             <td>{{ account['dateDue'] }}</td>
                         </tr>
