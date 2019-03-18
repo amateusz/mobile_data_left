@@ -8,13 +8,14 @@ class AccountSub(dict):
     GB = 'GBdue'
     NUMBER = 'msdin'
     ALIAS = 'alias'
-    OPERATOR = 'operator '  # statics
+    OPERATOR = 'operator'  # statics
 
     def __init__(self):
         self[__class__.NUMBER] = None
         self[__class__.GB] = None
         self[__class__.DATE] = None
         self[__class__.ALIAS] = None
+        self[__class__.OPERATOR] = None
 
     def __dict__(self):
         if self.GB and self.DATE:
