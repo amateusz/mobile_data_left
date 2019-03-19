@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session, abort
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 
 import business_logic
 
@@ -10,13 +10,27 @@ app.secret_key = 'some_secret'  # development only
 
 @app.route('/', methods=['GET'])
 def entry():
+    try:
+        for cookied_account_str in session['accounts']:
+            cookied_account = business_logic.Account.deserialize(cookied_account_str)
+            if type(cookied_account) == business_logic.Account:
+                # the client already has an account in theirs cookie
+                return redirect(url_for('services_list'))
+    except KeyError:
+        pass
     return render_template('welcome.html')
 
 
 @app.route('/services', methods=['POST'])
 def services_add():
     if request.form['username'] and request.form['password']:
-        # perform actual check
+        # sanitize
+        def sanitize_input(input):
+            return input.strip()
+
+        for key in request.form.keys():
+            request.form[key] = sanitize_input(request.form[key])
+
         # maybe some loading screen
         print("checking")
         try:
