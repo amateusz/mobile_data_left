@@ -3,65 +3,76 @@
     <div class="w3-content w3-rest" style="max-width: 800px; padding-top: calc(15vw + 30px)" id="main">
 
     <div class="w3-container">
-        <div class="w3-container w3-purple">
-            {% if accounts|length <= 1 %}
-                <h3>Twoje konto:</h3>
-            {% else %}
-                <h3>Twoje konta:</h3>
-            {% endif %}
 
-        </div>
-        <div>
-            {#                {% with accounts %}#}
-            <table class="w3-table w3-striped w3-bordered w3-white">
-                <tr class="w3-dark-grey">
-                    <th>Numer</th>
-                    <th>Operator</th>
-                    <th>Gigabajty</th>
-                    <th>Dni</th>
-                </tr>
-                {% for account in accounts %}
-                    <tr>
-                        <td>{{ account['msdin'] }}</td>
-                        <td>{{ account['operator'] }}</td>
-                        <td>{{ account['GBdue'] }}</td>
-                        <td>{{ account['dateDue'] }}</td>
+        {% if accounts|length == 0 %}
+            <div class="w3-container w3-red">
+                <h3>Brak kont</h3>
+            </div>
+        {% else %}
+
+            <div class="w3-container w3-purple">
+                {% if accounts|length == 1 %}
+                    <h3>Twoje konto:</h3>
+                {% else %}
+                    <h3>Twoje konta:</h3>
+                {% endif %}
+            </div>
+
+            <div>
+                {#                {% with accounts %}#}
+                <table class="w3-table w3-striped w3-bordered w3-white">
+                    <tr class="w3-dark-grey">
+                        <th>Numer</th>
+                        <th>Operator</th>
+                        <th>Gigabajty</th>
+                        <th>Dni</th>
                     </tr>
-                {% endfor %}
-            </table>
+                    {% for account in accounts %}
+                        <tr>
+                            <td>{{ account['msdin'] }}</td>
+                            {% if account['operator'].color %}
+                                <td style="background-color: {{ account['operator'].color }}">
+                                    {% else %}
+                                <td>
+                            {% endif %}
+                            {{ account['operator'].text }}</td>
+                            <td>{{ account['GBdue'] }}</td>
+                            <td>{{ account['dateDue'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
 
-            <div class="w3-row">
-                {# hidden modal pop-up #}
-                <div id="add_new_modal" class="w3-modal">
-                    {#                    override margins of mobile layout#}
-                    <div class="w3-modal-content w3-display-middle w3-mobile"
-                         style="max-width: 550px; margin: 0px 10px 0px 0px">
-                        <header class="w3-container w3-black">
+        <div class="w3-row">
+            {# hidden modal pop-up #}
+            <div id="add_new_modal" class="w3-modal">
+                {#                    override margins of mobile layout#}
+                <div class="w3-modal-content w3-display-middle w3-mobile"
+                     style="max-width: 550px; margin: 0px 10px 0px 0px">
+                    <header class="w3-container w3-black">
 
                         <span onclick="document.getElementById('add_new_modal').style.display='none';"
                               class="w3-button w3-display-topright">&times;</span>
-                            <h2>Dodaj kolejne konto</h2>
-                        </header>
-                        <div class="w3-auto w3-teal" style="padding-bottom: 20px"
-                             id="main">
-                            {% set submit_button_text = 'Dodaj' %}
-                            {% include "add_new_form.html" %}
-                        </div>
+                        <h2>Dodaj kolejne konto</h2>
+                    </header>
+                    <div class="w3-auto w3-teal" style="padding-bottom: 20px"
+                         id="main">
+                        {% set submit_button_text = 'Dodaj' %}
+                        {% include "add_new_form.html" %}
                     </div>
-                </div>
-
-
-                <form onclick="document.getElementById('add_new_modal').style.display = 'block';">
-                    <input class="w3-col  w3-button w3-ripple	 w3-light-blue w3-hover-purple w3-mobile"
-                           style="width: 35%; height: 60px; margin-top: 8px"
-                           id="add_new"
-                           type="button"
-                           value="Dodaj kolejne konto">
-                </form>
-                <div class="w3-rest  w3-hide-small">
                 </div>
             </div>
 
+            <form onclick="document.getElementById('add_new_modal').style.display = 'block';">
+                <input class="w3-col  w3-button w3-ripple	 w3-light-blue w3-hover-purple w3-mobile"
+                       style="width: 35%; height: 60px; margin-top: 8px"
+                       id="add_new"
+                       type="button"
+                       value="Dodaj kolejne konto">
+            </form>
+            <div class="w3-rest  w3-hide-small">
+            </div>
         </div>
     </div>
 {% endblock %}
