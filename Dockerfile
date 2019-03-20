@@ -2,7 +2,8 @@ FROM python:3-alpine
 
 # install requirements
 WORKDIR /install
-#COPY requirements/* ./
+
+COPY requirements/requirements.txt ./
 ADD https://github.com/amateusz/plus-online-client/releases/download/1.3.1/plus-online-client-1.3.1.tar.gz ./
 ADD https://github.com/amateusz/my-orange-client/releases/download/1.2.5/my_orange_client-1.2.5.tar.gz ./
 
