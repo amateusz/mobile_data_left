@@ -28,13 +28,15 @@ def services_add():
         def sanitize_input(input):
             return input.strip()
 
+        sanitized = {}
         for key in request.form.keys():
-            request.form[key] = sanitize_input(request.form[key])
+            sanitized[key] = sanitize_input(request.form[key])
 
         # maybe some loading screen
         print("checking")
         try:
-            new_account = business_logic.Account.guess_operator(*request.form.values())
+            print(*sanitized.values())
+            new_account = business_logic.Account.guess_operator(*sanitized.values())
         except LookupError:
             flash('Podane dane logowania są błędne. Żaden operator się do nich nie przyznaje', 'error')
         else:
@@ -45,25 +47,29 @@ def services_add():
             except Exception as e:
                 raise (e)  # idk
             else:
-                # check if already in session cookie
-                try:
-                    for cookied_account_str in session['accounts']:
+                duplicate_found = False
+                sessions_accounts = []
+                if 'accounts' in session:
+                    # prune existing sessions from the cookie
+                    sessions_accounts = session.get('accounts')
+
+                    # check if already in session cookie
+                    # does any's cookied subAccount number equals new subAccounts number?
+
+                    for cookied_account_str in sessions_accounts:
                         cookied_account = business_logic.Account.deserialize(cookied_account_str)
                         for cookied_subAccount in cookied_account.subAccounts:
                             for new_subAccount in new_account.subAccounts:
                                 if cookied_subAccount[business_logic.AccountSub.NUMBER] == \
                                         new_subAccount[business_logic.AccountSub.NUMBER]:
                                     # duplication
-                                    flash('Już masz to konto na swojej liście', 'error')
-                                    # abort(302)
-                                    return redirect(url_for('services_list'))
-                except KeyError:
-                    pass  # nvm. we are too fresh
+                                    duplicate_found = True
 
-                sessions_accounts = []
-                if 'accounts' in session:
-                    sessions_accounts = session.pop('accounts')
-                sessions_accounts.append(business_logic.Account.serialize(new_account))
+                if duplicate_found:
+                    flash('Już masz to konto na swojej liście', 'error')
+                    abort(302)
+                else:
+                    sessions_accounts.append(business_logic.Account.serialize(new_account))
                 session['accounts'] = sessions_accounts
 
                 session.permanent = True
