@@ -67,10 +67,9 @@ def services_add():
 
                 if duplicate_found:
                     flash('Już masz to konto na swojej liście', 'error')
-                    abort(302)
                 else:
                     sessions_accounts.append(business_logic.Account.serialize(new_account))
-                session['accounts'] = sessions_accounts
+                    session['accounts'] = sessions_accounts
 
                 session.permanent = True
 
