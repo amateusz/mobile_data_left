@@ -1,4 +1,6 @@
-# ile_gb
+# Sprawadź ile internetu
+![](https://media.giphy.com/media/vgzpaGyKXC7kwdOlkj/giphy.gif)
+
 A webapp to quickly check mobile data plan limit. Polish providers only
 
 Now (3.2019) is the live testing phase, avaliable @ http://amateusz.pythonanywhere.com/
