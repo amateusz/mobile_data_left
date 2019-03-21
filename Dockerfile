@@ -5,7 +5,7 @@ WORKDIR /install
 
 COPY requirements/requirements.txt ./
 ADD https://github.com/amateusz/plus-online-client/releases/download/1.3.1/plus-online-client-1.3.1.tar.gz ./
-ADD https://github.com/amateusz/my-orange-client/releases/download/1.2.5/my_orange_client-1.2.5.tar.gz ./
+ADD https://github.com/amateusz/my-orange-client/releases/download/1.2.7/my_orange_client-1.2.7.tar.gz ./
 
 RUN pip install *.tar.gz
 RUN pip install -U pip

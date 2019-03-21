@@ -25,7 +25,7 @@
                         <th>Numer</th>
                         <th>Operator</th>
                         <th>Gigabajty</th>
-                        <th>Dni</th>
+                        <th>Czas ważności</th>
                     </tr>
                     {% for account in accounts %}
                         <tr>
@@ -37,7 +37,7 @@
                             {% endif %}
                             {{ account['operator'].text }}</td>
                             <td>{{ account['GBdue'] }}</td>
-                            <td>{{ account['dateDue'] }}</td>
+                            <td>{{ account['dateDue'] }} {{ 'dzień' if account['dateDue'] else 'dni' }}</td>
                         </tr>
                     {% endfor %}
                 </table>
